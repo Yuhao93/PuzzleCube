@@ -175,10 +175,8 @@ public class Util {
     }
     
     public void rotate(Rotation rotation, Axis axis){
-      System.out.println("before: " + this);
       Matrix r = new Matrix(rotation, axis);
       setPoints(r.rotate(this));
-      System.out.println("after : " + this);
     }
     
     @Override
