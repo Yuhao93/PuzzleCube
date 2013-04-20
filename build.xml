@@ -23,7 +23,7 @@
     <!-- Create the distribution directory -->
     <mkdir dir="${dist}/lib"/>
 
-    <!-- Put everything in ${build} into the MyProject-${DSTAMP}.jar file -->
+    <!-- Put everything in ${build} into the puzzlecube.jar file -->
     <jar jarfile="${dist}/lib/puzzlecube.jar" basedir="${build}"/>
   </target>
 

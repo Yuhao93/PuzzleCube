@@ -324,11 +324,6 @@ public class Cube {
 
         IPiece piece = piecesMap.get(new Position(x, y, -z));
         
-        for(Face f : piece.getFaces()){
-          System.out.println(f.getColor() + " " + f.getDirection());
-        }
-        System.out.println("----------------------------\n");
-        
         res += Util.colorToString(piece.getFace(Direction.UP).getColor()).charAt(0);
       }
       res += '\n';
