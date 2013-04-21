@@ -1,16 +1,18 @@
 package org.haodev.puzzlecube;
 
+import org.haodev.puzzlecube.Position;
+
 public class Util {
   private Util() { }
   
-  public static final int UP = 0;
-  public static final int FRONT = 1;
-  public static final int RIGHT = 2;
-  public static final int DOWN = 3;
-  public static final int BACK = 4;
-  public static final int LEFT = 5;
+  static final int UP = 0;
+  static final int FRONT = 1;
+  static final int RIGHT = 2;
+  static final int DOWN = 3;
+  static final int BACK = 4;
+  static final int LEFT = 5;
   
-  public static Position map(int face, int x, int y, int z){
+  static Position map(int face, int x, int y, int z){
     Position pos = new Position(x, y, z);
   
     switch(face){
@@ -39,7 +41,7 @@ public class Util {
     return pos;
   }
   
-  public static Direction rotateFaceX(Direction dir, Rotation rot){
+  static Direction rotateFaceX(Direction dir, Rotation rot){
     switch(dir){
       case UP:
           return rot == Rotation.CLOCKWISE
@@ -68,7 +70,7 @@ public class Util {
     return null;
   }
   
-  public static Direction rotateFaceY(Direction dir, Rotation rot){
+  static Direction rotateFaceY(Direction dir, Rotation rot){
     switch(dir){
       case UP:
       case DOWN:
@@ -98,7 +100,7 @@ public class Util {
     return null;
   }
   
-  public static Direction rotateFaceZ(Direction dir, Rotation rot){
+  static Direction rotateFaceZ(Direction dir, Rotation rot){
     switch(dir){
       case UP:
           return rot == Rotation.CLOCKWISE
@@ -139,105 +141,6 @@ public class Util {
     }
   }
   
-  public static class Position {
-    private int x, y, z;
-    
-    public Position(int x, int y, int z){
-      this.x = x;
-      this.y = y;
-      this.z = z;
-    }
-    
-    public Position(Position copy){
-      this(copy.getX(), copy.getY(), copy.getZ());
-    }
-    
-    public int getX(){
-      return x;
-    }
-    
-    public int getY(){
-      return y;
-    }
-    
-    public int getZ(){
-      return z;
-    }
-    
-    public int[] points(){
-      return new int[]{x, y, z};
-    }
-    
-    public void setPoints(int[] points){
-      this.x = points[0];
-      this.y = points[1];
-      this.z = points[2];
-    }
-    
-    public void rotate(Rotation rotation, Axis axis){
-      Matrix r = new Matrix(rotation, axis);
-      setPoints(r.rotate(this));
-    }
-    
-    @Override
-    public int hashCode(){
-      return x * y * z;
-    }
-    
-    @Override
-    public boolean equals(Object obj){
-      if(obj instanceof Position){
-        Position pos = (Position) obj;
-        return (pos.x == x && pos.y == y && pos.z == z);
-      }
-      
-      return false;
-    }
-    
-    @Override
-    public String toString(){
-      return "{" + x + "," + y + "," + z + "}";
-    }
-  }
-  
-  public static class Matrix {
-    int[] m = new int[9];
-    
-    public Matrix(Rotation rot, Axis axis) {
-      int cos = 0;
-      int sin = rot == Rotation.CLOCKWISE ? 1 : -1;
-    
-      switch(axis){
-        case X_AXIS:
-          m = new int[]{1, 0, 0, 0, cos, -sin, 0, sin, cos};
-          break;
-          
-        case Y_AXIS:
-          m = new int[]{cos, 0, sin, 0, 1, 0, -sin, 0, cos};
-          break;
-          
-        case Z_AXIS:
-          m = new int[]{cos, -sin, 0, sin, cos, 0, 0, 0, 1};
-          break;
-      }
-    }
-    
-    public int[] rotate(Position point){
-      int[] res = new int[3];
-      int[] points = point.points();
-      
-      for(int i = 0; i < res.length; i ++){
-        for(int j = 0; j < 3; j ++){
-          res[i] += points[j] * m[j + (i * 3)];
-        }
-      }
-      
-      return res;
-    }
-  }
-  
-  
-  
   public static enum Rotation {
     CLOCKWISE,
     COUNTER_CLOCKWISE
@@ -260,10 +163,10 @@ public class Util {
   
   public static enum Color {
     RED,
-    GREEN,
+    BLUE,
     WHITE,
     ORANGE,
-    BLUE,
+    GREEN,
     YELLOW
   }
 }

@@ -13,12 +13,12 @@ import org.haodev.puzzlecube.Util.Rotation;
  * @author Yuhao Ma (yuhao93@gmail.com)
  */
 public class Face {
-  public static final Face UP = new Face(Direction.UP, Color.YELLOW);
-  public static final Face LEFT = new Face(Direction.LEFT, Color.GREEN);
-  public static final Face FRONT = new Face(Direction.FRONT, Color.RED);
-  public static final Face DOWN = new Face(Direction.DOWN, Color.WHITE);
-  public static final Face RIGHT = new Face(Direction.RIGHT, Color.BLUE);
-  public static final Face BACK = new Face(Direction.BACK, Color.ORANGE);
+  static final Face UP = new Face(Direction.UP, Color.YELLOW);
+  static final Face LEFT = new Face(Direction.LEFT, Color.BLUE);
+  static final Face FRONT = new Face(Direction.FRONT, Color.RED);
+  static final Face DOWN = new Face(Direction.DOWN, Color.WHITE);
+  static final Face RIGHT = new Face(Direction.RIGHT, Color.GREEN);
+  static final Face BACK = new Face(Direction.BACK, Color.ORANGE);
 
   private Direction direction;
   private Color color;

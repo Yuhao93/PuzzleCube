@@ -4,20 +4,20 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.Stack;
 
+import org.haodev.puzzlecube.Position;
 import org.haodev.puzzlecube.Util;
 import org.haodev.puzzlecube.Util.Axis;
 import org.haodev.puzzlecube.Util.Color;
 import org.haodev.puzzlecube.Util.Direction;
-import org.haodev.puzzlecube.Util.Position;
 import org.haodev.puzzlecube.Util.Rotation;
 
 /**
  * Represents a Puzzle Cube
  *
  *
- * Puzzle Cube sits on origin with Front, Up, and Left being on the negative axis
+ * Puzzle Cube sits with its center on the origin with 
+ *   Front, Up, and Left being on the negative axis
  *   and Back, Down, Right being on the positive axis
  *
  * @author Yuhao Ma (yuhao93@gmail.com)
@@ -122,6 +122,34 @@ public class Cube {
     }
     
     piecesMap = newMap;
+  }
+  
+  /**
+   * Gets the piece of the cube at the x, y, z coordinate
+   *
+   * @param x x cube coordinate
+   * @param y y cube coordinate
+   * @param z z cube coordinate
+   *
+   * @returns the cube piece at the position, or null if doesn't exist
+   */
+  public IPiece getPiece(int x, int y, int z){
+    return getPiece(new Position(x, y, z));
+  }
+  
+  /**
+   * Gets the piece of the cube at the position
+   *
+   * @param position position
+   *
+   * @returns the cube piece at the position, or null if doesn't exist
+   */
+  public IPiece getPiece(Position position){
+    if(piecesMap.containsKey(position)){
+      return piecesMap.get(position);
+    }else{
+      return null;
+    }
   }
   
   // Initialize a cube with initially correct colors
@@ -293,6 +321,31 @@ public class Cube {
   }
   
   /**
+   * Returns a String that can be printed to the console to display the cube's current state
+   * For example, a solved cube with sideLength 3 will print out
+   *
+   *    YYY
+   *    YYY
+   *    YYY
+   * BBBRRRGGGOOO
+   * BBBRRRGGGOOO
+   * BBBRRRGGGOOO
+   *    WWW
+   *    WWW
+   *    WWW
+   * 
+   *
+   * where:
+   *   Y => Top
+   *   B => Left
+   *   R => Front
+   *   G => Right
+   *   O => Back
+   *   W => Down
+   *
+   * The orientation of each face is what it would look like if the cube were flattened into
+   *   a 2D pattern
+   *
    * @returns A string representation of the cube suitable for console line printing
    */
   @Override
@@ -322,8 +375,7 @@ public class Cube {
           z ++;
         }
 
-        IPiece piece = piecesMap.get(new Position(x, y, -z));
-        
+        IPiece piece = getPiece(x, y, -z);
         res += Util.colorToString(piece.getFace(Direction.UP).getColor()).charAt(0);
       }
       res += '\n';
@@ -349,7 +401,7 @@ public class Cube {
           z ++;
         }
  
-        IPiece piece = piecesMap.get(new Position(x, y, -z));
+        IPiece piece = getPiece(new Position(x, y, -z));
         res += Util.colorToString(piece.getFace(Direction.LEFT).getColor()).charAt(0);
       }
       
@@ -370,7 +422,7 @@ public class Cube {
           y ++;
         }
         
-        IPiece piece = piecesMap.get(new Position(x, y, z));
+        IPiece piece = getPiece(new Position(x, y, z));
         res += Util.colorToString(piece.getFace(Direction.FRONT).getColor()).charAt(0);
       }
       
@@ -391,7 +443,7 @@ public class Cube {
           z ++;
         }
         
-        IPiece piece = piecesMap.get(new Position(x, y, z));
+        IPiece piece = getPiece(new Position(x, y, z));
         res += Util.colorToString(piece.getFace(Direction.RIGHT).getColor()).charAt(0);
       }
       
@@ -412,7 +464,7 @@ public class Cube {
           y ++;
         }
         
-        IPiece piece = piecesMap.get(new Position(-x, y, z));
+        IPiece piece = getPiece(new Position(-x, y, z));
         res += Util.colorToString(piece.getFace(Direction.BACK).getColor()).charAt(0);
       }
       res += '\n';
@@ -441,7 +493,7 @@ public class Cube {
           z ++;
         }
         
-        IPiece piece = piecesMap.get(new Position(x, y, z));
+        IPiece piece = getPiece(new Position(x, y, z));
         res += Util.colorToString(piece.getFace(Direction.DOWN).getColor()).charAt(0);
       }
       res += '\n';

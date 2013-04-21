@@ -1,8 +1,8 @@
 package org.haodev.puzzlecube;
 
+import org.haodev.puzzlecube.Position;
 import org.haodev.puzzlecube.Util.Axis;
 import org.haodev.puzzlecube.Util.Direction;
-import org.haodev.puzzlecube.Util.Position;
 import org.haodev.puzzlecube.Util.Rotation;
 
 /**
