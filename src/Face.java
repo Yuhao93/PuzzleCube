@@ -1,8 +1,6 @@
 package org.haodev.puzzlecube;
 
-import org.haodev.puzzlecube.Util;
 import org.haodev.puzzlecube.Util.Axis;
-import org.haodev.puzzlecube.Util.Color;
 import org.haodev.puzzlecube.Util.Direction;
 import org.haodev.puzzlecube.Util.Rotation;
 
@@ -59,18 +57,18 @@ public class Face {
    * @param rot which direction to rotate the face
    * @param axis which axis to rotate the face around
    */
-  public void rotate(Rotation rot, Axis axis){
-    switch(axis){
+  public void rotate(Move move){
+    switch(move.getAxis()){
       case X_AXIS:
-        direction = Util.rotateFaceX(direction, rot);
+        direction = Util.rotateFaceX(move, direction);
         break;
         
       case Y_AXIS:
-        direction = Util.rotateFaceY(direction, rot);
+        direction = Util.rotateFaceY(move, direction);
         break;
         
       case Z_AXIS:
-        direction = Util.rotateFaceZ(direction, rot);
+        direction = Util.rotateFaceZ(move, direction);
         break;
     }
 

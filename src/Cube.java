@@ -2,13 +2,11 @@ package org.haodev.puzzlecube;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
-import org.haodev.puzzlecube.Position;
-import org.haodev.puzzlecube.Util;
 import org.haodev.puzzlecube.Util.Axis;
-import org.haodev.puzzlecube.Util.Color;
 import org.haodev.puzzlecube.Util.Direction;
 import org.haodev.puzzlecube.Util.Rotation;
 
@@ -22,22 +20,28 @@ import org.haodev.puzzlecube.Util.Rotation;
  *
  * @author Yuhao Ma (yuhao93@gmail.com)
  */
-public class Cube {
+public class Cube implements Iterable<Piece>{
   private int sideLength = 3;
   
   private List<Corner> corners = new ArrayList<Corner>();
   private List<Edge> edges = new ArrayList<Edge>();
   private List<Center> centers = new ArrayList<Center>();
   
-  private List<IPiece> pieces = new ArrayList<IPiece>();
-  private Map<Position, IPiece> piecesMap = new HashMap<Position, IPiece>();
+  private List<Piece> pieces = new ArrayList<Piece>();
+  private Map<Position, Piece> piecesMap = new HashMap<Position, Piece>();
+  
+  private ColorMapper colorMapper = new ColorMapper();
   
   /**
    * @param sideLength How many pieces make up one edge of the cube
    */
   public Cube(int sideLength){
+    this(sideLength, true);
+  }
+  
+  Cube(int sideLength, boolean withFaces){
     this.sideLength = sideLength;
-    init();
+    init(withFaces);
   }
   
   /**
@@ -49,76 +53,53 @@ public class Cube {
    */
   public void rotate(Rotation rotation, Direction direction, int depth){
     // Store all the new pieces in a new temp Map
-    Map<Position, IPiece> newMap = new HashMap<Position, IPiece>();
+    Map<Position, Piece> newMap = new HashMap<Position, Piece>();
+    
+    // Move to make
+    Move move = new Move(rotation, direction, depth);
     
     // Slice index, changed to cube coordinates
     int s = depth - (sideLength / 2);
     if(sideLength % 2 == 0 && s >= 0){
       s ++;
     }
-    
+
     // Which direction we are coming from
     // BACK, RIGHT, and DOWN are just inverses of FRONT, LEFT, and UP
-    switch(direction){
-      case FRONT:
-        for(Map.Entry<Position, IPiece> entry : piecesMap.entrySet()){
-          IPiece p = entry.getValue();
-          if(entry.getKey().getZ() == s){
-            p.rotate(rotation, Axis.Z_AXIS);
-          }
-          newMap.put(p.getPosition(), p);
-        }
-        break;
+    for(Map.Entry<Position, Piece> entry : piecesMap.entrySet()){
+      Piece p = entry.getValue();
+      boolean test = false;
+      
+      switch(direction){
+        case FRONT:
+          test = (entry.getKey().getZ() == s);
+          break;
         
-      case LEFT:
-        for(Map.Entry<Position, IPiece> entry : piecesMap.entrySet()){
-          IPiece p = entry.getValue();
-          if(entry.getKey().getX() == s){
-            p.rotate(rotation, Axis.X_AXIS);
-          }
-          newMap.put(p.getPosition(), p);
-        }
-        break;
+        case LEFT:
+          test = (entry.getKey().getX() == s);
+          break;
         
-      case UP:
-        for(Map.Entry<Position, IPiece> entry : piecesMap.entrySet()){
-          IPiece p = entry.getValue();
-          if(entry.getKey().getY() == s){
-            p.rotate(rotation, Axis.Y_AXIS);
-          }
-          newMap.put(p.getPosition(), p);
-        }
-        break;
+        case UP:
+          test = (entry.getKey().getY() == s);
+          break;
+          
+        case BACK:
+          test = (entry.getKey().getZ() == -s);
+          break;
         
-      case BACK:
-        for(Map.Entry<Position, IPiece> entry : piecesMap.entrySet()){
-          IPiece p = entry.getValue();
-          if(entry.getKey().getZ() == -s){
-            p.rotate(Util.reverseRotation(rotation), Axis.Z_AXIS);
-          }
-          newMap.put(p.getPosition(), p);
-        }
-        break;
+        case RIGHT:
+          test = (entry.getKey().getX() == -s);
+          break;
         
-      case RIGHT:
-        for(Map.Entry<Position, IPiece> entry : piecesMap.entrySet()){
-          IPiece p = entry.getValue();
-          if(entry.getKey().getX() == -s){
-            p.rotate(Util.reverseRotation(rotation), Axis.X_AXIS);
-          }
-          newMap.put(p.getPosition(), p);
-        }
-        break;
-        
-      case DOWN:
-        for(Map.Entry<Position, IPiece> entry : piecesMap.entrySet()){
-          IPiece p = entry.getValue();
-          if(entry.getKey().getY() == -s){
-            p.rotate(Util.reverseRotation(rotation), Axis.Y_AXIS);
-          }
-          newMap.put(p.getPosition(), p);
-        }
-        break;
+        case DOWN:
+          test = (entry.getKey().getY() == -s);
+          break;
+      }
+      
+      if(test){
+        p.rotate(move);
+      }
+      newMap.put(p.getPosition(), p);
     }
     
     piecesMap = newMap;
@@ -133,7 +114,7 @@ public class Cube {
    *
    * @returns the cube piece at the position, or null if doesn't exist
    */
-  public IPiece getPiece(int x, int y, int z){
+  public Piece getPiece(int x, int y, int z){
     return getPiece(new Position(x, y, z));
   }
   
@@ -144,7 +125,7 @@ public class Cube {
    *
    * @returns the cube piece at the position, or null if doesn't exist
    */
-  public IPiece getPiece(Position position){
+  public Piece getPiece(Position position){
     if(piecesMap.containsKey(position)){
       return piecesMap.get(position);
     }else{
@@ -152,23 +133,44 @@ public class Cube {
     }
   }
   
+  /**
+   * Iterate through the cube in the 2D map format
+   *
+   * @returns Cube Iterator
+   */
+  public Iterator<Piece> iterator(){
+    return new CubeIterator(this);
+  }
+  
+  /**
+   * @returns Length of side of cube
+   */
+  public int getSideLength(){
+    return sideLength;
+  }
+  
+  // Set the color mapper
+  void setMapper(ColorMapper mapper){
+    colorMapper = mapper;
+  }
+  
   // Initialize a cube with initially correct colors
-  private void init(){
-    initCenters();
-    initCorners();
-    initEdges();
+  private void init(boolean withFaces){
+    initCenters(withFaces);
+    initCorners(withFaces);
+    initEdges(withFaces);
   }
   
   // Initialize the centers
-  private void initCenters(){
+  private void initCenters(boolean withFaces){
     // All the faces we are using
     Face[] faces = new Face[]{
-      Face.UP.copy(),
-      Face.FRONT.copy(),
-      Face.RIGHT.copy(),
-      Face.DOWN.copy(),
-      Face.BACK.copy(),
-      Face.LEFT.copy()
+      colorMapper.getUp(),
+      colorMapper.getFront(),
+      colorMapper.getLeft(),
+      colorMapper.getDown(),
+      colorMapper.getBack(),
+      colorMapper.getRight()
     };
   
     // Center is a square whose side length is 2 less than the cube
@@ -195,7 +197,12 @@ public class Cube {
           }
           
           // Rotate the piece to the correct direction
-          Center center = new Center(Util.map(i, x, y, z), faces[i]);
+          Center center = null;
+          if(withFaces){
+            center = new Center(Util.map(i, x, y, z), faces[i]);
+          }else{
+            center = new Center(Util.map(i, x, y, z));
+          }
 
           // Add to all lists and maps
           pieces.add(center);
@@ -207,7 +214,7 @@ public class Cube {
   }
   
   // Initialize the Corners
-  private void initCorners(){
+  private void initCorners(boolean withFaces){
     // The corner is always sideLength / 2 away from Origin
     int cornerDist = sideLength / 2;
     
@@ -225,19 +232,24 @@ public class Cube {
           // Determine the faces for each corner
           Face[] f = new Face[3];
           f[0] = (i == 0 
-              ? Face.LEFT.copy()
-              : Face.RIGHT.copy());
+              ? colorMapper.getLeft()
+              : colorMapper.getRight());
               
           f[1] = (j == 0 
-              ? Face.UP.copy()
-              : Face.DOWN.copy());
+              ? colorMapper.getUp()
+              : colorMapper.getDown());
               
           f[2] = (k == 0 
-              ? Face.FRONT.copy()
-              : Face.BACK.copy());
+              ? colorMapper.getFront()
+              : colorMapper.getBack());
           
           // Add to all lists and maps
-          Corner corner = new Corner(position, f);
+          Corner corner = null;
+          if(withFaces){
+            corner = new Corner(position, f);
+          }else{
+            corner = new Corner(position);
+          }
           pieces.add(corner);
           corners.add(corner);
           
@@ -248,7 +260,7 @@ public class Cube {
   }
   
   // Initialize Edges
-  private void initEdges(){
+  private void initEdges(boolean withFaces){
     // An edge is 1 x (sideLength - 2)
     int edgeLength = sideLength - 2;
     
@@ -283,33 +295,38 @@ public class Cube {
             y = cubeLength * (i == 0 ? -1 : 1);
             z = (j % 2 == 0 ? (j == 0 ? -cubeLength : cubeLength): offset);
             f[0] = (i == 0 
-                ? Face.UP.copy()
-                : Face.DOWN.copy());
+                ? colorMapper.getUp()
+                : colorMapper.getDown());
             if(j == 0){
-              f[1] = Face.FRONT.copy();
+              f[1] = colorMapper.getFront();
             }else if(j == 1){
-              f[1] = Face.RIGHT.copy();
+              f[1] = colorMapper.getRight();
             }else if(j == 2){
-              f[1] = Face.BACK.copy();
+              f[1] = colorMapper.getBack();
             }else if(j == 3){
-              f[1] = Face.LEFT.copy();
+              f[1] = colorMapper.getLeft();
             }
           }else{
             x = (j == 0 || j == 3 ? -cubeLength : cubeLength);
             y = offset;
             z = (j < 2 ? -cubeLength : cubeLength);
             f[0] = (j < 2 
-                ? Face.FRONT.copy()
-                : Face.BACK.copy());
+                ? colorMapper.getFront()
+                : colorMapper.getBack());
                 
             f[1] = (j == 0 || j == 3 
-                ? Face.LEFT.copy()
-                : Face.RIGHT.copy());
+                ? colorMapper.getLeft()
+                : colorMapper.getRight());
             
           }
           
-          Edge edge = new Edge(new Position(x, y, z), f);
-
+          Edge edge = null;
+          if(withFaces){
+            edge = new Edge(new Position(x, y, z), f);
+          }else{
+            edge = new Edge(new Position(x, y, z));
+          }
+           
           // Add pieces to list and map
           pieces.add(edge);
           edges.add(edge);
@@ -351,154 +368,48 @@ public class Cube {
   @Override
   public String toString(){
     String res = "";
-    
-    // Up face
-    // j => x
-    // y is constant
-    // i => z
+    Iterator<Piece> iterator = iterator();
+
     for(int i = 0; i < sideLength; i ++){
-      // Padding
       for(int k = 0; k < sideLength; k ++){
-        res += " ";
+        res += ' ';
+      }
+      for(int j = 0; j < sideLength; j ++){
+        res += iterator.next().getFace(Direction.UP).getColor().toString().charAt(0);
+      }
+      res += '\n';
+    }
+    
+    for(int i = 0; i < sideLength; i ++){
+
+      for(int j = 0; j < sideLength; j ++){
+        res += iterator.next().getFace(Direction.LEFT).getColor().toString().charAt(0);
+      }
+
+      for(int j = 0; j < sideLength; j ++){
+        res += iterator.next().getFace(Direction.FRONT).getColor().toString().charAt(0);
+      }
+
+      for(int j = 0; j < sideLength; j ++){
+        res += iterator.next().getFace(Direction.RIGHT).getColor().toString().charAt(0);
+      }
+
+      for(int j = 0; j < sideLength; j ++){
+        res += iterator.next().getFace(Direction.BACK).getColor().toString().charAt(0);
+      }
+      res += '\n';
+    }
+    
+    for(int i = 0; i < sideLength; i ++){
+      for(int k = 0; k < sideLength; k ++){
+        res += ' ';
       }
       
       for(int j = 0; j < sideLength; j ++){
-        int x = j - (sideLength / 2);
-        int y = -sideLength / 2;
-        int z = i - (sideLength / 2);
-        
-        if(x >= 0 && sideLength % 2 == 0){
-          x ++;
-        }
-        
-        if(z >= 0 && sideLength % 2 == 0){
-          z ++;
-        }
-
-        IPiece piece = getPiece(x, y, -z);
-        res += Util.colorToString(piece.getFace(Direction.UP).getColor()).charAt(0);
+        res += iterator.next().getFace(Direction.DOWN).getColor().toString().charAt(0);
       }
       res += '\n';
     }
-    
-    // Four faces
-    for(int i = 0; i < sideLength; i ++){
-
-      // Left face
-      // x is constant
-      // i => y
-      // l => z
-      for(int l = 0; l < sideLength; l ++){
-        int x = -sideLength / 2;
-        int y = i - (sideLength / 2);
-        int z = l - (sideLength / 2);
-        
-        if(y >= 0 && sideLength % 2 == 0){
-          y ++;
-        }
-        
-        if(z >= 0 && sideLength % 2 == 0){
-          z ++;
-        }
- 
-        IPiece piece = getPiece(new Position(x, y, -z));
-        res += Util.colorToString(piece.getFace(Direction.LEFT).getColor()).charAt(0);
-      }
-      
-      // Front face
-      // f => x
-      // i => y
-      // z is constant
-      for(int f = 0; f < sideLength; f ++){
-        int x = f - (sideLength / 2);
-        int y = i - (sideLength / 2);
-        int z = -sideLength / 2;
-        
-        if(x >= 0 && sideLength % 2 == 0) {
-          x ++;
-        }
-        
-        if(y >= 0 && sideLength % 2 == 0) {
-          y ++;
-        }
-        
-        IPiece piece = getPiece(new Position(x, y, z));
-        res += Util.colorToString(piece.getFace(Direction.FRONT).getColor()).charAt(0);
-      }
-      
-      // Right face
-      // x is constant
-      // i => y
-      // r => z
-      for(int r = 0; r < sideLength; r ++){
-        int x = sideLength / 2;
-        int y = i - (sideLength / 2);
-        int z = r - (sideLength / 2);
-        
-        if(y >= 0 && sideLength % 2 == 0){
-          y ++;
-        }
-        
-        if(z >= 0 && sideLength % 2 == 0){
-          z ++;
-        }
-        
-        IPiece piece = getPiece(new Position(x, y, z));
-        res += Util.colorToString(piece.getFace(Direction.RIGHT).getColor()).charAt(0);
-      }
-      
-      // Back face
-      // b => x
-      // i => y
-      // z is constant
-      for(int b = 0; b < sideLength; b ++){
-        int x = b - (sideLength / 2);
-        int y = i - (sideLength / 2);
-        int z = sideLength / 2;
-        
-        if(x >= 0 && sideLength % 2 == 0) {
-          x ++;
-        }
-        
-        if(y >= 0 && sideLength % 2 == 0) {
-          y ++;
-        }
-        
-        IPiece piece = getPiece(new Position(-x, y, z));
-        res += Util.colorToString(piece.getFace(Direction.BACK).getColor()).charAt(0);
-      }
-      res += '\n';
-    }
-    
-    // Bottom face
-    // j => x
-    // y is constant
-    // i => z
-    for(int i = 0; i < sideLength; i ++){
-      // Padding
-      for(int k = 0; k < sideLength; k ++){
-        res += " ";
-      }
-      
-      for(int j = 0; j < sideLength; j ++){
-        int x = j - (sideLength / 2);
-        int y = sideLength / 2;
-        int z = i - (sideLength / 2);
-        
-        if(x >= 0 && sideLength % 2 == 0){
-          x ++;
-        }
-        
-        if(z >= 0 && sideLength % 2 == 0){
-          z ++;
-        }
-        
-        IPiece piece = getPiece(new Position(x, y, z));
-        res += Util.colorToString(piece.getFace(Direction.DOWN).getColor()).charAt(0);
-      }
-      res += '\n';
-    }
-
     return res;
   }
 }

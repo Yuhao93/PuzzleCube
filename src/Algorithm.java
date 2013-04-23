@@ -1,6 +1,6 @@
 package org.haodev.puzzlecube;
 
-import org.haodev.puzzlecube.Cube;
+import java.util.List;
 
 /**
  * An algorithm that takes in a cube and applys an algorithm to it
@@ -12,7 +12,7 @@ public interface Algorithm {
    * Runs the algorithm on the cube
    *
    * @param cube the puzzle cube to apply algorithm to
-   * @returns true if algorithm ran successfully, false otherwise
+   * @returns Array of moves applied to the cube
    */
-  public boolean run(Cube cube);
+  public List<Move> run(Cube cube);
 }

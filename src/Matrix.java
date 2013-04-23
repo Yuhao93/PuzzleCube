@@ -3,9 +3,16 @@ package org.haodev.puzzlecube;
 import org.haodev.puzzlecube.Util.Axis;
 import org.haodev.puzzlecube.Util.Rotation;
 
+/** 
+ * A Rotation Matrix. Given an Axis and Rotation, it can rotate a point
+ * around an axis
+ *
+ * @author Yuhao Ma (yuhao93@gmail.com)
+ */
 class Matrix {
   int[] m = new int[9];
   
+  // Create a matrix around an axis
   Matrix(Rotation rot, Axis axis) {
     int cos = 0;
     int sin = rot == Rotation.CLOCKWISE ? 1 : -1;
@@ -25,6 +32,7 @@ class Matrix {
     }
   }
     
+  // Rotate a point by applying this matrix
   int[] rotate(Position point){
     int[] res = new int[3];
     int[] points = point.points();

@@ -1,9 +1,6 @@
 package org.haodev.puzzlecube;
 
-import org.haodev.puzzlecube.Position;
-import org.haodev.puzzlecube.Util.Axis;
 import org.haodev.puzzlecube.Util.Direction;
-import org.haodev.puzzlecube.Util.Rotation;
 
 /**
  * Represents a Center piece on a cube.
@@ -11,7 +8,7 @@ import org.haodev.puzzlecube.Util.Rotation;
  *
  * @author Yuhao Ma (yuhao93@gmail.com)
  */
-public class Center implements IPiece {
+public class Center implements Piece {
   private Face face;
   private Position position;
   
@@ -27,16 +24,32 @@ public class Center implements IPiece {
     this.position = position;
     this.face = face;
   }
+  
+  Center(Position position){
+    this.position = position;
+  }
+  
+  void addFace(Face face){
+    if(this.face != null){
+      throw new IndexOutOfBoundsException();
+    }
+    this.face = face;
+  }
 
   @Override
-  public void rotate(Rotation rot, Axis axis){
-    position.rotate(rot, axis);
-    face.rotate(rot, axis);
+  public void rotate(Move move){
+    position.rotate(move);
+    face.rotate(move);
   }
 
   @Override
   public Position getPosition(){
     return position;
+  }
+  
+  @Override
+  public String getPieceType(){
+    return "Center";
   }
   
   @Override

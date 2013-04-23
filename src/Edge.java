@@ -1,9 +1,6 @@
 package org.haodev.puzzlecube;
 
-import org.haodev.puzzlecube.Position;
-import org.haodev.puzzlecube.Util.Axis;
 import org.haodev.puzzlecube.Util.Direction;
-import org.haodev.puzzlecube.Util.Rotation;
 
 /**
  * Represents an Edge piece on a cube.
@@ -11,9 +8,10 @@ import org.haodev.puzzlecube.Util.Rotation;
  *
  * @author Yuhao Ma (yuhao93@gmail.com)
  */
-public class Edge implements IPiece {
+public class Edge implements Piece {
   private Face[] faces;
   private Position position;
+  private int faceInd = 0;
   
   /**
    * @param faces the faces to paint onto this edge
@@ -26,19 +24,34 @@ public class Edge implements IPiece {
   
     this.faces = faces;
     this.position = position;
+    this.faceInd = 2;
+  }
+  
+  Edge(Position position){
+    this.faces = new Face[2];
+    this.position = position;
+  }
+  
+  void addFace(Face face){
+    faces[faceInd ++] = face;
   }
 
   @Override
-  public void rotate(Rotation rot, Axis axis){
-    position.rotate(rot, axis);
+  public void rotate(Move move){
+    position.rotate(move);
     for(Face face : faces){
-      face.rotate(rot, axis);
+      face.rotate(move);
     }
   }
 
   @Override
   public Position getPosition(){
     return position;
+  }
+  
+  @Override
+  public String getPieceType(){
+    return "Edge";
   }
   
   @Override

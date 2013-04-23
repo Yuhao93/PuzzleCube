@@ -1,17 +1,15 @@
 package org.haodev.puzzlecube;
 
-import org.haodev.puzzlecube.Position;
 import org.haodev.puzzlecube.Util.Axis;
 import org.haodev.puzzlecube.Util.Direction;
 import org.haodev.puzzlecube.Util.Rotation;
 
-import org.haodev.puzzlecube.Cube;
-
 import java.util.Scanner;
 
 public class Launcher{
-  public static void main(String[] args){
-    Cube cube = new Cube(Integer.parseInt(args[0]));
+  public static void main(String[] args) throws Exception{
+    //Cube cube = new Cube(Integer.parseInt(args[0]));
+    Cube cube = CubeParser.createCubeFromFile(args[0]);
     System.out.println(cube);
     
     Scanner scanner = new Scanner(System.in);

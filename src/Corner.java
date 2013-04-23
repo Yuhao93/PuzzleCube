@@ -1,9 +1,6 @@
 package org.haodev.puzzlecube;
 
-import org.haodev.puzzlecube.Position;
-import org.haodev.puzzlecube.Util.Axis;
 import org.haodev.puzzlecube.Util.Direction;
-import org.haodev.puzzlecube.Util.Rotation;
 
 /**
  * Represents a Corner piece on a cube.
@@ -11,9 +8,10 @@ import org.haodev.puzzlecube.Util.Rotation;
  *
  * @author Yuhao Ma (yuhao93@gmail.com)
  */
-public class Corner implements IPiece {
+public class Corner implements Piece {
   private Face[] faces;
   private Position position;
+  private int faceInd = 0;
   
   /**
    * @param faces the faces to paint onto this corner
@@ -26,19 +24,34 @@ public class Corner implements IPiece {
     
     this.position = position;
     this.faces = faces;
+    this.faceInd = 3;
   }
 
+  Corner(Position position){
+    this.faces = new Face[3];
+    this.position = position;
+  }
+  
+  void addFace(Face face){
+    faces[faceInd ++] = face;
+  }
+  
   @Override
-  public void rotate(Rotation rot, Axis axis){
-    position.rotate(rot, axis);
+  public void rotate(Move move){
+    position.rotate(move);
     for(Face face : faces){
-      face.rotate(rot, axis);
+      face.rotate(move);
     }
   }
 
   @Override
   public Position getPosition(){
     return position;
+  }
+  
+  @Override
+  public String getPieceType(){
+    return "Corner";
   }
   
   @Override
