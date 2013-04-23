@@ -44,13 +44,8 @@ public class CubeParser {
     return createCubeFromArgs(res);
   }
   
-  /**
-   * Given a String, parse it and return the cube
-   *
-   * @param args the string to parse
-   * @returns the cube generated from the file
-   */
-  public static Cube createCubeFromArgs(String args){
+  
+  static Cube createCubeFromArgs(String args){
     Scanner scanner = new Scanner(args);
     int sideLength = scanner.nextInt();
     
