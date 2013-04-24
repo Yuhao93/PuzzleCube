@@ -5,9 +5,16 @@ import java.util.Iterator;
 import org.haodev.puzzlecube.Util.Direction;
 
 /**
- * Iterates through a cube in a 2D Map order
+ * Iterates through a cube in a 2D mapped order
  *
- * Given a cube map like
+ * Given a cube map where:
+ *
+ *   T is the top face
+ *   L is the left face
+ *   F is the front face
+ *   D is the bottom face
+ *   R is the right face
+ *   B is the back face
  *
  *       T T T
  *       T T T
@@ -19,7 +26,7 @@ import org.haodev.puzzlecube.Util.Direction;
  *       D D D
  *       D D D
  *
- * The order returned is
+ * The order returned is:
  *
  *           1  2  3
  *           4  5  6
@@ -32,13 +39,28 @@ import org.haodev.puzzlecube.Util.Direction;
  *          52 53 54
  */
 public class CubeIterator implements Iterator<Piece> {
+  // cube to iterate through
   private Cube cube;
+  
+  // how many pieces we've iterated through
   private int ind;
+  
+  // how many pieces there are to iterate through
   private int count;
+  
+  // number of pieces on a face
   private int faceSize;
+  
+  // side Length
   private int sideLength;
+  
+  // The row in the 2D map that we're currently on
   private int i;
+  
+  // The column in the 2D map that we're currently on
   private int j;
+  
+  // How many sets of sideLengths we've finished
   private int linesComplete = 0;
   
   /**
@@ -53,7 +75,7 @@ public class CubeIterator implements Iterator<Piece> {
 
   @Override
   public boolean hasNext(){
-    return ind == count;
+    return ind < count;
   }
   
   @Override

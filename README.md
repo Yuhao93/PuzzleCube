@@ -5,24 +5,17 @@ PuzzleCube is a Java library for modeling arbitrary sized PuzzleCubes.
 A PuzzleCube with a sideLength of 2 or greater can be created by a simply instantiating the `Cube` class.
 
 ```java
-/**
- * Example for demonstrating a cube
- */
-public class Launcher{
-  public static void main(String[] args){
-    // Creates a 3x3x3 puzzle cube, initially solved
-    Cube cube = new Cube(3);
+// Creates a 3x3x3 puzzle cube, initially solved
+Cube cube = new Cube(3);
     
-    // Prints out the cube
-    System.out.println(cube);
+// Prints out the cube
+System.out.println(cube);
     
-    // Rotates the front face clockwise
-    cube.rotate(Rotation.CLOCKWISE, Direction.FRONT, 0);
+// Rotates the front face clockwise
+cube.rotate(Rotation.CLOCKWISE, Direction.FRONT, 0);
     
-    // Prints out the cube after rotated
-    System.out.println(cube);
-  }
-}
+// Prints out the cube after rotated
+System.out.println(cube);
 ```
 
 Cube
@@ -36,10 +29,10 @@ The range of coordinates that a piece can have in a `sideLength` sized cube will
 Reading From a File
 -------------------
 
-A cube can be loaded in from a configuration outlined from file using the `CubeParser` class.
-The formatting of the configuration file must be correct in order for the cube to be correctly constructed. The configuration file contains tokens separated by at least one white space. Tabs, newlines, and extra whitespaces will be ignored. A '#' character denotes the start of a comment line, as such, any characters after the '#' character will be ignored.
+A cube can be loaded in from a configuration outlined from a file using the `CubeParser` class.
+The formatting of the configuration file must be correct in order for the cube to be correctly constructed. The configuration file contains tokens separated by at least one white space. Tabs, newlines, and extra whitespaces will be ignored. A `#` character denotes the start of a comment line, as such, any characters after the `#` character will be ignored.
 
-The tokens will must come in a specific order.
+The tokens come in a specific order.
   1. sideLength
   2. 1 character abbreviation of the top face color
   3. Color of the top face
@@ -52,7 +45,7 @@ The tokens will must come in a specific order.
   10. 1 character abbreviation of the front back color
   11. Color of the back face
   12. 1 character abbreviation of the right face color
-  13. Color of the right face 
+  13. Color of the right face
   14 onwards. 1 character abbreviation of the color to be painted onto the face corresponding to the order the faces are iterated through
   
 The order which the faces are iterated through are as it would be when printing the 2D pattern line by line.
@@ -82,7 +75,7 @@ The order which the faces are iterated through would then be:
           52 53 54
 ```
 
-An example configuration file such as `checkers.txt` would look like:
+A configuration file named `checkers.txt` would look like:
 ```
 # Everything on a line after the '#' character is a comment
 # Cube Side Length

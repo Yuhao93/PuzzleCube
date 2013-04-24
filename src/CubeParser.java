@@ -1,9 +1,11 @@
 package org.haodev.puzzlecube;
 
 import java.io.BufferedReader;
+import java.io.File;
 import java.io.FileReader;
 import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.io.OutputStream;
 
 import java.util.HashMap;
 import java.util.Iterator;
@@ -26,9 +28,20 @@ public class CubeParser {
    * @param fileName The file path leading to the file to parse
    * @returns the cube generated from the file
    */
-  public static Cube createCubeFromFile(String fileName)
+  public static Cube createCubeFromFilePath(String fileName)
       throws IOException, FileNotFoundException{
-    BufferedReader br = new BufferedReader(new FileReader(fileName));
+    return createCubeFromFile(new File(fileName));
+  }
+  
+  /**
+   * Given a file, parse it and return the cube
+   *
+   * @param file The file to parse
+   * @returns the cube generated from the file
+   */
+  public static Cube createCubeFromFile(File file)
+      throws IOException, FileNotFoundException{
+    BufferedReader br = new BufferedReader(new FileReader(file));
     String res = "";
     String str = br.readLine();
     while(str != null){
@@ -38,12 +51,61 @@ public class CubeParser {
         str = str.substring(0, str.indexOf("#"));
       }
     
-      res += str + ' ';
+      res += str + " ";
       str = br.readLine();
     }
     return createCubeFromArgs(res);
   }
   
+  /**
+   * Given a cube and the file path to write to, write the cube
+   *   to the file
+   *
+   * @param cube the cube to write
+   * @param fileName the file path to the file to write to
+   */
+  public static void writeCubeToFileName(Cube cube, String fileName)
+      throws IOException, FileNotFoundException{
+    writeCubeToFile(cube, new File(fileName));
+  }
+  
+  /**
+   * Given a cube and the file to write to, write the cube 
+   *   onto the file
+   *
+   * @param cube the cube to write
+   * @param file the file to write to
+   */
+  public static void writeCubeToFile(Cube cube, File file)
+      throws IOException, FileNotFoundException{
+    file.createNewFile();
+    FileOutputStream fos = new FileOutputStream(file);
+    String res = "";
+    ColorMapper mapper = cube.getMapper();
+    int ind = 0;
+    
+    res += cube.getSideLength() + " ";
+    res += mapper.getUpColor().toString().charAt(0) + " ";
+    res += mapper.getUpColor() + " ";
+    res += mapper.getFrontColor().toString().charAt(0) + " ";
+    res += mapper.getFrontColor() + " ";
+    res += mapper.getLeftColor().toString().charAt(0) + " ";
+    res += mapper.getLeftColor() + " ";
+    res += mapper.getDownColor().toString().charAt(0) + " ";
+    res += mapper.getDownColor() + " ";
+    res += mapper.getBackColor().toString().charAt(0) + " ";
+    res += mapper.getBackColor() + " ";
+    res += mapper.getRightColor().toString().charAt(0) + " ";
+    res += mapper.getRightColor() + " ";
+    
+    for(Iterator<Piece> iterator = cube.iterator(); iterator.hasNext(); ind ++){
+      res += iterator.next().getFace(Util.determineDirectionFromInd(ind, cube.getSideLength()))
+          .getColor().toString().charAt(0) + " ";
+    }
+    
+    fos.write(res.getBytes());
+    fos.flush();
+  }
   
   static Cube createCubeFromArgs(String args){
     Scanner scanner = new Scanner(args);

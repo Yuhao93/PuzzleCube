@@ -154,6 +154,11 @@ public class Cube implements Iterable<Piece>{
     colorMapper = mapper;
   }
   
+  // Get the color mapper
+  ColorMapper getMapper(){
+    return colorMapper;
+  }
+  
   // Initialize a cube with initially correct colors
   private void init(boolean withFaces){
     initCenters(withFaces);
