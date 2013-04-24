@@ -12,7 +12,7 @@ import java.util.Scanner;
 
 public class Launcher{
   public static void main(String[] args) throws Exception{
-    Cube cube = CubeParser.createCubeFromFilePath(args[0]);
+    Cube cube = CubeParser.createCubeFromFile(args[0]);
     System.out.println(cube);
     
     Scanner scanner = new Scanner(System.in);
@@ -44,12 +44,6 @@ public class Launcher{
         cube.rotate(Rotation.COUNTER_CLOCKWISE, Direction.DOWN, 0);
       }
       System.out.println(cube);
-      
-      File f = new File("../save.txt");
-      f.createNewFile();
-      FileOutputStream fos = new FileOutputStream(f);
-      CubeParser.writeCubeToOutput(cube, fos);
-      
       str = scanner.next().toLowerCase();
     }
     
