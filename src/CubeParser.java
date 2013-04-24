@@ -28,7 +28,7 @@ public class CubeParser {
    * @param fileName The file path leading to the file to parse
    * @returns the cube generated from the file
    */
-  public static Cube createCubeFromFilePath(String fileName)
+  public static Cube createCubeFromFile(String fileName)
       throws IOException, FileNotFoundException{
     return createCubeFromFile(new File(fileName));
   }
@@ -64,7 +64,7 @@ public class CubeParser {
    * @param cube the cube to write
    * @param fileName the file path to the file to write to
    */
-  public static void writeCubeToFileName(Cube cube, String fileName)
+  public static void writeCubeToFile(Cube cube, String fileName)
       throws IOException, FileNotFoundException{
     writeCubeToFile(cube, new File(fileName));
   }
