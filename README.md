@@ -137,7 +137,7 @@ The tokens come in a specific order.
   11. Color of the back face
   12. 1 character abbreviation of the right face color
   13. Color of the right face
-  14 onwards. 1 character abbreviation of the color to be painted onto the face corresponding 
+  14. From here onwards, 1 character abbreviation of the color to be painted onto the face corresponding 
 to the order the faces are iterated through
   
 The order which the faces are iterated through would be:
