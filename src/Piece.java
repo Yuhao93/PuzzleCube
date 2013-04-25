@@ -18,21 +18,21 @@ public interface Piece{
   /**
    * Gets the position of the piece
    *
-   * @returns the position of the piece
+   * @return the position of the piece
    */
   public Position getPosition();
   
   /**
    * Gets the string name of the piece type
    *
-   * @returns the string name of the piece type
+   * @return the string name of the piece type
    */
   public String getPieceType();
   
   /**
    * Gets the faces of the piece
    *
-   * @returns the faces of the piece
+   * @return the faces of the piece
    */
   public Face[] getFaces();
   
@@ -41,7 +41,7 @@ public interface Piece{
    * or null if it doesn't exist
    *
    * @param direction the direction of the face
-   * @returns the face in that direction, or null
+   * @return the face in that direction, or null
    */
   public Face getFace(Direction direction);
   
@@ -50,7 +50,7 @@ public interface Piece{
    * 
    * @param direction the direction of the face to paint
    * @param color the color to paint
-   * @returns true if successful, false if the face doesn't exist
+   * @return true if successful, false if the face doesn't exist
    */
   public boolean setFace(Direction direction, Color color);
   
@@ -59,7 +59,7 @@ public interface Piece{
    * a given direction.
    *
    * @param direction the direction of the face
-   * @returns true if the piece has a face pointing in 
+   * @return true if the piece has a face pointing in 
    *          the given direction
    */
   public boolean hasFace(Direction direction);

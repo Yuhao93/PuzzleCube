@@ -27,7 +27,7 @@ public class CubeParser {
    * Given a file, parse it and return the cube
    *
    * @param fileName The file path leading to the file to parse
-   * @returns the cube generated from the file
+   * @return the cube generated from the file
    */
   public static Cube createCubeFromFile(String fileName)
       throws IOException, FileNotFoundException{
@@ -38,7 +38,7 @@ public class CubeParser {
    * Given a file, parse it and return the cube
    *
    * @param file The file to parse
-   * @returns the cube generated from the file
+   * @return the cube generated from the file
    */
   public static Cube createCubeFromFile(File file)
       throws IOException, FileNotFoundException{
@@ -66,7 +66,7 @@ public class CubeParser {
    * @param sideLength The length of one edge of the cube
    * @param mapper The color mapping
    * @param colors the colors of the cube
-   * @returns the cube generated from the arguments
+   * @return the cube generated from the arguments
    */
   public static Cube createCubeFromArguments(int sideLength, 
       ColorMapper mapper, Color[] colors){

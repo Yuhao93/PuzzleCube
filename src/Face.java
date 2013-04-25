@@ -31,21 +31,21 @@ public class Face {
   }
   
   /**
-   * @returns the direction that the face is pointing
+   * @return the direction that the face is pointing
    */
   public Direction getDirection(){
     return direction;
   }
   
   /**
-   * @returns the color of the face
+   * @return the color of the face
    */
   public Color getColor(){
     return color;
   }
   
   /**
-   * @returns shallow copy of this Face
+   * @return shallow copy of this Face
    */
   public Face copy(){
     return new Face(this.direction, this.color);
@@ -54,8 +54,7 @@ public class Face {
   /**
    * Rotate the face around axis by rot
    * 
-   * @param rot which direction to rotate the face
-   * @param axis which axis to rotate the face around
+   * @param move the transformation to apply to the cube
    */
   public void rotate(Move move){
     switch(move.getAxis()){

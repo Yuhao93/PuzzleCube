@@ -21,9 +21,20 @@ System.out.println(cube);
 Cube
 ----
 
-A cube can be thought of as a lattice of points that lie in 3D space. Each piece of the cube can be represented as a single point. The center of this lattice always lies on the origin. As such, odd and even length cubes have different ways of denoting the position of each piece.
+A cube can be thought of as a lattice of points that lie in 3D space. 
+Each piece of the cube can be represented as a single point. 
+Each piece contains one or several faces. 
+Each face represents a single sticker on the cube and has a direction facing and color component. 
+The center of this lattice always lies on the origin. 
+As such, odd and even length cubes have different ways of denoting the position of each piece.
 
-The range of coordinates that a piece can have in a `sideLength` sized cube will be `[-sideLength / 2, sideLength / 2]`. As an example, a 3x3x3 cube would have a corner at `{-1, -1, -1}`, an edge at `{0, -1, -1}` and the mirror corner at `{1, -1, -1}`. In contrast, a 4x4x4 cube would have a corner at  `{-2, -2, -2}`, two edges at `{-1, -2, -2}` and `{1, -2, -2}`, and the mirror corner at `{2, -2, -2}`. Notice that for cubes with an even sideLength, to maintain the symmetry, there are no pieces with any coordinates of 0. Therefore, for a 4x4x4 cube, the 4 possible values for any coordinate is `[-2, -1, 1, 2]` while the 3 possible values for a 3x3x3 cube is `[-1, 0, 1]`.
+The range of coordinates that a piece can have in a `sideLength` sized cube will be 
+`[-sideLength / 2, sideLength / 2]`. As an example, a 3x3x3 cube would have a corner at `{-1, -1, -1}`, 
+an edge at `{0, -1, -1}` and the mirror corner at `{1, -1, -1}`. In contrast, a 4x4x4 cube would have a corner at 
+`{-2, -2, -2}`, two edges at `{-1, -2, -2}` and `{1, -2, -2}`, and the mirror corner at `{2, -2, -2}`. 
+Notice that for cubes with an even sideLength, to maintain the symmetry, there are no pieces with any coordinates of 0. 
+Therefore, for a 4x4x4 cube, the 4 possible values for any coordinate is `[-2, -1, 1, 2]` while the 3 possible values 
+for a 3x3x3 cube is `[-1, 0, 1]`.
 
 A cube can be printed out to the console easily by calling:
 ```Java
@@ -31,7 +42,9 @@ System.out.println(cube);
 ```
 
 The cube layout will look like an unfolded 2D version of the cube. 
-For a cube where `T` corresponds to the Top face, `F` corresponds to the Front face, `L` corresponds to the Left face, `D` corresponds to the Down face, `B` corresponds to the Back face, and `R` corresponds to the Right face, the map of a 3x3x3 cube would follow along the lines of:
+For a cube where `T` corresponds to the Top face, `F` corresponds to the Front face, 
+`L` corresponds to the Left face, `D` corresponds to the Down face, `B` corresponds to the Back face, and 
+`R` corresponds to the Right face, the map of a 3x3x3 cube would follow along the lines of:
 ```
       T T T
       T T T
@@ -49,7 +62,10 @@ L L L F F F R R R B B B
 Rotation
 --------
 
-A puzzle cube wouldn't be a puzzle cube if you can't rotate it! When you rotate a cube, you are rotating a "slice" of the cube. A slice could be one of the outer faces, but it could also be one of the interior layers as well. Slices are numbered with the outermost layer being `slice 0` and the opposite face being `slice sideLength - 1`. 
+A puzzle cube wouldn't be a puzzle cube if you can't rotate it! When you rotate a cube, 
+you are rotating a "slice" of the cube. A slice could be one of the outer faces, 
+but it could also be one of the interior layers as well. Slices are numbered with the 
+outermost layer being `slice 0` and the opposite face being `slice sideLength - 1`. 
 
 The front slices for a 3x3x3 puzzle cube will appear like:
 ```
@@ -63,7 +79,8 @@ The front slices for a 3x3x3 puzzle cube will appear like:
       1 1 1
       2 2 2
 ```
-Although a slice 2 of the front face refers to the same pieces as slice 0 of the back face, directions will be reversed as you will be viewing the slice from two opposite directions.
+Although a slice 2 of the front face refers to the same pieces as slice 0 of the back face, 
+directions will be reversed as you will be viewing the slice from two opposite directions.
       
 The direction is simply from which perspective you are viewing the cube when describing the rotation.
 The rotation describes which way, clockwise or counter clockwise, to turn the slice.
@@ -77,7 +94,9 @@ cube.rotate(Rotation.CLOCKWISE, Direction.FRONT, 0);
 Coloring
 --------
 
-You can manually color a cube by painting its individual pieces. The `Cube` class doesn't perform any kind of validation to ensure that a cube is in a valid and solvable state, so painting parts of the cube must be done with caution.
+You can manually color a cube by painting its individual pieces. The `Cube` class doesn't 
+perform any kind of validation to ensure that a cube is in a valid and solvable state, so 
+painting parts of the cube must be done with caution.
 
 You can paint a face of a piece of the cube using coordinates:
 ```Java
@@ -99,7 +118,10 @@ Reading From a File
 -------------------
 
 A cube can be loaded in from a configuration outlined from a file using the `CubeParser` class.
-The formatting of the configuration file must be correct in order for the cube to be correctly constructed. The configuration file contains tokens separated by at least one white space. Tabs, newlines, and extra whitespaces will be ignored. A `#` character denotes the start of a comment line, as such, any characters after the `#` character will be ignored.
+The formatting of the configuration file must be correct in order for the cube to be correctly 
+constructed. The configuration file contains tokens separated by at least one white space. 
+Tabs, newlines, and extra whitespaces will be ignored. A `#` character denotes the start of a 
+comment line, as such, any characters after the `#` character will be ignored.
 
 The tokens come in a specific order.
   1. sideLength
@@ -115,7 +137,8 @@ The tokens come in a specific order.
   11. Color of the back face
   12. 1 character abbreviation of the right face color
   13. Color of the right face
-  14 onwards. 1 character abbreviation of the color to be painted onto the face corresponding to the order the faces are iterated through
+  14 onwards. 1 character abbreviation of the color to be painted onto the face corresponding 
+to the order the faces are iterated through
   
 The order which the faces are iterated through would be:
 ```
@@ -179,7 +202,9 @@ Cube cube = CubeParser.createCubeFromFile("checkers.txt");
 Writing to a File
 -----------------
 
-Writing a cube to a file is very similar to how you would read a cube from a file. The file that is written can be read using the reading functionality. An example of writing a cube to a configurtion file, creating it if it doesn't exit:
+Writing a cube to a file is very similar to how you would read a cube from a file. 
+The file that is written can be read using the reading functionality. 
+An example of writing a cube to a configurtion file, creating it if it doesn't exit:
 ```Java
 CubeParser.writeCubeToFile(cube, "checkers.txt");
 ```
@@ -188,4 +213,6 @@ CubeParser.writeCubeToFile(cube, "checkers.txt");
 Solution
 --------
 
-Future updates of PuzzleCube will include ways of solving a cube. This will be implemented using the `Algorithm` interface. A sequence of algorithms will be applied to a cube, solving it.
+Future updates of PuzzleCube will include ways of solving a cube. 
+This will be implemented using the `Algorithm` interface. 
+A sequence of algorithms will be applied to a cube, solving it.

@@ -15,7 +15,7 @@ public abstract class Solution {
    * Get the list of moves to perform on the cube to solve it
    *
    * @param cube The cube to solve
-   * @returns List of moves
+   * @return List of moves
    */
   public List<Move> solve(Cube cube){
     List<Move> moves = new ArrayList<Move>();

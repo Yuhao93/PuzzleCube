@@ -112,7 +112,7 @@ public class Cube implements Iterable<Piece>{
    * @param y y cube coordinate
    * @param z z cube coordinate
    *
-   * @returns the cube piece at the position, or null if doesn't exist
+   * @return the cube piece at the position, or null if doesn't exist
    */
   public Piece getPiece(int x, int y, int z){
     return getPiece(new Position(x, y, z));
@@ -123,7 +123,7 @@ public class Cube implements Iterable<Piece>{
    *
    * @param position position
    *
-   * @returns the cube piece at the position, or null if doesn't exist
+   * @return the cube piece at the position, or null if doesn't exist
    */
   public Piece getPiece(Position position){
     if(piecesMap.containsKey(position)){
@@ -139,7 +139,7 @@ public class Cube implements Iterable<Piece>{
    * @param piece the piece to paint
    * @param direction direction of the face to paint
    * @param color color to paint
-   * @returns true if successful, false if piece of face doesn't exist
+   * @return true if successful, false if piece of face doesn't exist
    */
   public boolean paintPiece(Piece piece, 
       Direction direction, Color color){
@@ -152,7 +152,7 @@ public class Cube implements Iterable<Piece>{
    * @param position position of the piece
    * @param direction direction of the face to paint
    * @param color color to paint
-   * @returns true if successful, false if piece of face doesn't exist
+   * @return true if successful, false if piece of face doesn't exist
    */
   public boolean paintPiece(Position position, 
       Direction direction, Color color){
@@ -166,14 +166,14 @@ public class Cube implements Iterable<Piece>{
   /**
    * Iterate through the cube in the 2D map format
    *
-   * @returns Cube Iterator
+   * @return Cube Iterator
    */
   public Iterator<Piece> iterator(){
     return new CubeIterator(this);
   }
   
   /**
-   * @returns Length of side of cube
+   * @return Length of side of cube
    */
   public int getSideLength(){
     return sideLength;
@@ -398,7 +398,7 @@ public class Cube implements Iterable<Piece>{
    * The orientation of each face is what it would look like if the cube were flattened into
    *   a 2D pattern
    *
-   * @returns A string representation of the cube suitable for console line printing
+   * @return A string representation of the cube suitable for console line printing
    */
   @Override
   public String toString(){

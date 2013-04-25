@@ -12,7 +12,7 @@ public interface Algorithm {
    * Runs the algorithm on the cube
    *
    * @param cube the puzzle cube to apply algorithm to
-   * @returns Array of moves applied to the cube
+   * @return Array of moves applied to the cube
    */
   public List<Move> run(Cube cube);
 }

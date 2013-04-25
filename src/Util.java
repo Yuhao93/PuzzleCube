@@ -22,7 +22,7 @@ public class Util {
    * Given a rotation, return the opposite
    *
    * @param rotation rotation to reverse
-   * @returns the reverse rotation, clockwise if when the input is counter 
+   * @return the reverse rotation, clockwise if when the input is counter 
    *          clockwise and counter clockwise when the input is clockwise
    */
   public static Rotation reverseRotation(Rotation rotation){
@@ -40,7 +40,7 @@ public class Util {
    *
    * @param piece1 piece to compare to see if it is the same
    * @param piece2 piece to compare to see if it is the same
-   * @returns true if both pieces contain the same number of faces
+   * @return true if both pieces contain the same number of faces
    *          and they have the same faces, false otherwise
    */
   public static boolean isSamePiece(Piece piece1, Piece piece2){

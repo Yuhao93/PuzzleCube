@@ -23,21 +23,21 @@ public class Position {
   }
    
   /**
-   * @returns x coodinate
+   * @return x coodinate
    */
   public int getX(){
     return x;
   }
   
   /**
-   * @returns y coodinate
+   * @return y coodinate
    */  
   public int getY(){
     return y;
   }
   
   /**
-   * @returns z coodinate
+   * @return z coodinate
    */
   public int getZ(){
     return z;

@@ -6,37 +6,44 @@ import org.haodev.puzzlecube.Util.Direction;
 
 /**
  * Iterates through a cube in a 2D mapped order
- *
+ * <br>
  * Given a cube map where:
- *
- *   T is the top face
- *   L is the left face
- *   F is the front face
- *   D is the bottom face
- *   R is the right face
- *   B is the back face
- *
- *       T T T
- *       T T T
- *       T T T 
- * L L L F F F R R R B B B
- * L L L F F F R R R B B B
- * L L L F F F R R R B B B
- *       D D D 
- *       D D D
- *       D D D
- *
- * The order returned is:
- *
- *           1  2  3
- *           4  5  6
- *           7  8  9
- * 10 11 12 13 14 15 16 17 18 19 20 21
- * 22 23 24 25 26 27 28 29 30 31 32 33
- * 34 35 36 37 38 39 40 41 42 43 44 45
- *          46 47 48
- *          49 50 51
- *          52 53 54
+ * <br>
+ * <ul>
+ * <li>T is the top face</li>
+ * <li>L is the left face</li>
+ * <li>F is the front face</li>
+ * <li>D is the bottom face</li>
+ * <li>R is the right face</li>
+ * <li>B is the back face</li>
+ * </ul>
+ * <br>
+ * <pre>
+ *       T T T<br>
+ *       T T T<br>
+ *       T T T <br>
+ * L L L F F F R R R B B B<br>
+ * L L L F F F R R R B B B<br>
+ * L L L F F F R R R B B B<br>
+ *       D D D<br>
+ *       D D D<br>
+ *       D D D<br>
+ * </pre>
+ * <br>
+ * The order returned is:<br>
+ * <br>
+ * <pre>
+ *           1  2  3<br>
+ *           4  5  6<br>
+ *           7  8  9<br>
+ * 10 11 12 13 14 15 16 17 18 19 20 21<br>
+ * 22 23 24 25 26 27 28 29 30 31 32 33<br>
+ * 34 35 36 37 38 39 40 41 42 43 44 45<br>
+ *          46 47 48<br>
+ *          49 50 51<br>
+ *          52 53 54<br>
+ * </pre>
+ * @author Yuhao Ma (yuhao93@gmail.com)
  */
 public class CubeIterator implements Iterator<Piece> {
   // cube to iterate through

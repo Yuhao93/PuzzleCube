@@ -35,84 +35,84 @@ public class ColorMapper {
   }
   
   /**
-   * @returns the color of the up face
+   * @return the color of the up face
    */
   public Color getUpColor(){
     return colors[0];
   }
   
   /**
-   * @returns the color of the front face
+   * @return the color of the front face
    */
   public Color getFrontColor(){
     return colors[1];
   }
   
   /**
-   * @returns the color of the left face
+   * @return the color of the left face
    */
   public Color getLeftColor(){
     return colors[2];
   }
   
   /**
-   * @returns the color of the down face
+   * @return the color of the down face
    */
   public Color getDownColor(){
     return colors[3];
   }
   
   /**
-   * @returns the color of the back face
+   * @return the color of the back face
    */
   public Color getBackColor(){
     return colors[4];
   }
   
   /**
-   * @returns the color of the right face
+   * @return the color of the right face
    */
   public Color getRightColor(){
     return colors[5];
   }
   
   /**
-   * @returns an up face with the up color
+   * @return an up face with the up color
    */
   public Face getUp(){
     return new Face(Direction.UP, getUpColor());
   }
   
   /**
-   * @returns a front face with the front color
+   * @return a front face with the front color
    */
   public Face getFront(){
     return new Face(Direction.FRONT, getFrontColor());
   }
   
   /**
-   * @returns a left face with the left color
+   * @return a left face with the left color
    */
   public Face getLeft(){
     return new Face(Direction.LEFT, getLeftColor());
   }
   
   /**
-   * @returns a down face with the down color
+   * @return a down face with the down color
    */
   public Face getDown(){
     return new Face(Direction.DOWN, getDownColor());
   }
   
   /**
-   * @returns a back face with the back color
+   * @return a back face with the back color
    */
   public Face getBack(){
     return new Face(Direction.BACK, getBackColor());
   }
   
   /**
-   * @returns a right face with the right color
+   * @return a right face with the right color
    */
   public Face getRight(){
     return new Face(Direction.RIGHT, getRightColor());

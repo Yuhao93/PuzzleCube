@@ -78,21 +78,21 @@ public class Move {
   }
   
   /**
-   * @returns the rotation described by this move
+   * @return the rotation described by this move
    */
   public Rotation getRotation(){
     return rotation;
   }
   
   /**
-   * @returns the direction described by this move
+   * @return the direction described by this move
    */
   public Direction getDirection(){
     return direction;
   }
   
   /**
-   * @returns the slice affected by this move
+   * @return the slice affected by this move
    */
   public int getSlice(){
     return slice;
@@ -124,7 +124,7 @@ public class Move {
    * A clockwise rotation of slice 2 (slice = 1) of the 
    * front face would be 2F'
    *
-   * @returns string representation of the mvoe
+   * @return string representation of the mvoe
    */
   @Override
   public String toString(){
