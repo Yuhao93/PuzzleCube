@@ -99,7 +99,7 @@ public class Move {
   }
   
   /**
-   * The axis that this move will rotate around
+   * @return the axis that this move will rotate around
    */
   public Axis getAxis(){
     switch(direction){

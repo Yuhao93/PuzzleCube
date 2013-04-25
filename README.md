@@ -79,8 +79,8 @@ The front slices for a 3x3x3 puzzle cube will appear like:
       1 1 1
       2 2 2
 ```
-Although a slice 2 of the front face refers to the same pieces as slice 0 of the back face, 
-directions will be reversed as you will be viewing the slice from two opposite directions.
+Although slice 2 of the front face refers to the same pieces as slice 0 of the back face, 
+rotations will be reversed as you will be viewing the slice from two opposite directions.
       
 The direction is simply from which perspective you are viewing the cube when describing the rotation.
 The rotation describes which way, clockwise or counter clockwise, to turn the slice.

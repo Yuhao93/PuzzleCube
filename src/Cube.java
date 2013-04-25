@@ -374,29 +374,29 @@ public class Cube implements Iterable<Piece>{
   
   /**
    * Returns a String that can be printed to the console to display the cube's current state
-   * For example, a solved cube with sideLength 3 will print out
-   *
-   *    YYY
-   *    YYY
-   *    YYY
-   * BBBRRRGGGOOO
-   * BBBRRRGGGOOO
-   * BBBRRRGGGOOO
-   *    WWW
-   *    WWW
-   *    WWW
-   * 
-   *
+   * For example, a solved cube with sideLength 3 will print out:<br>
+   * <pre>
+   *       Y Y Y<br>
+   *       Y Y Y<br>
+   *       Y Y Y<br>
+   * B B B R R R G G G O O O<br>
+   * B B B R R R G G G O O O<br>
+   * B B B R R R G G G O O O<br>
+   *       W W W<br>
+   *       W W W<br>
+   *       W W W<br>
+   * <br>
    * where:
-   *   Y => Top
-   *   B => Left
-   *   R => Front
-   *   G => Right
-   *   O => Back
-   *   W => Down
-   *
-   * The orientation of each face is what it would look like if the cube were flattened into
-   *   a 2D pattern
+   * <ul>
+   * <li>Y => Top</li>
+   * <li>B => Left</li>
+   * <li>R => Front</li>
+   * <li>G => Right</li>
+   * <li>O => Back</li>
+   * <li>W => Down</li>
+   * </ul>
+   * The orientation of each face is what it would look like if the cube were unfolded into
+   * a 2D pattern
    *
    * @return A string representation of the cube suitable for console line printing
    */

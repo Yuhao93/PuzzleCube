@@ -8,20 +8,12 @@ import org.haodev.puzzlecube.Util.Direction;
  *
  * @author Yuhao Ma (yuhao93@gmail.com)
  */
-public class Corner implements Piece {
+class Corner implements Piece {
   private Face[] faces;
   private Position position;
   private int faceInd = 0;
-  
-  /**
-   * @param faces the faces to paint onto this corner
-   * @throws IllegalArgumentException if faces is null or faces is the wrong length
-   */
-  public Corner(Position position, Face[] faces) throws IllegalArgumentException {
-    if(faces == null || faces.length != 3 || position == null){
-      throw new IllegalArgumentException();
-    }
-    
+
+  Corner(Position position, Face[] faces) {
     this.position = position;
     this.faces = faces;
     this.faceInd = 3;

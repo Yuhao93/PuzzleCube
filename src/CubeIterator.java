@@ -45,7 +45,7 @@ import org.haodev.puzzlecube.Util.Direction;
  * </pre>
  * @author Yuhao Ma (yuhao93@gmail.com)
  */
-public class CubeIterator implements Iterator<Piece> {
+class CubeIterator implements Iterator<Piece> {
   // cube to iterate through
   private Cube cube;
   
@@ -70,9 +70,6 @@ public class CubeIterator implements Iterator<Piece> {
   // How many sets of sideLengths we've finished
   private int linesComplete = 0;
   
-  /**
-   * @param cube Cube to iterate through
-   */
   public CubeIterator(Cube cube){
     this.cube = cube;
     this.sideLength = cube.getSideLength();

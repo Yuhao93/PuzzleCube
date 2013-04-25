@@ -8,19 +8,11 @@ import org.haodev.puzzlecube.Util.Direction;
  *
  * @author Yuhao Ma (yuhao93@gmail.com)
  */
-public class Center implements Piece {
+class Center implements Piece {
   private Face face;
   private Position position;
   
-  /**
-   * @param face the face to paint onto this center
-   * @throws IllegalArgumentException if face is null
-   */
-  public Center(Position position, Face face) throws IllegalArgumentException{
-    if(face == null || position == null){
-      throw new IllegalArgumentException();
-    }
-  
+  Center(Position position, Face face) {
     this.position = position;
     this.face = face;
   }
