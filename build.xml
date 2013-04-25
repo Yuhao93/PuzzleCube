@@ -30,7 +30,7 @@
     <delete dir="${doc}"/>
   </target>
   
-  <target name="javadoc" description="generate documentation">
+  <target name="javadoc" depends="init" description="generate documentation">
     <javadoc destdir="${doc}">
       <fileset dir="${src}/" includes="**/*.java"/>
     </javadoc>
