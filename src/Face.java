@@ -73,4 +73,8 @@ public class Face {
     }
 
   }
+  
+  void setColor(Color color){
+    this.color = color;
+  }
 }

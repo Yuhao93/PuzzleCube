@@ -61,4 +61,18 @@ public class Center implements Piece {
   public Face getFace(Direction direction){
     return direction == face.getDirection() ? face : null;
   }
+  
+  @Override
+  public boolean setFace(Direction direction, Color color){
+    if(face.getDirection() == direction){
+        face.setColor(color);
+        return true;
+    }
+    return false;
+  }
+  
+  @Override
+  public boolean hasFace(Direction direction){
+    return face.getDirection() == direction;
+  }
 }

@@ -44,4 +44,23 @@ public interface Piece{
    * @returns the face in that direction, or null
    */
   public Face getFace(Direction direction);
+  
+  /**
+   * Try to paint a face of the piece.
+   * 
+   * @param direction the direction of the face to paint
+   * @param color the color to paint
+   * @returns true if successful, false if the face doesn't exist
+   */
+  public boolean setFace(Direction direction, Color color);
+  
+  /**
+   * Check to see if the piece has a face pointing in
+   * a given direction.
+   *
+   * @param direction the direction of the face
+   * @returns true if the piece has a face pointing in 
+   *          the given direction
+   */
+  public boolean hasFace(Direction direction);
 }

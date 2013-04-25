@@ -134,6 +134,23 @@ public class Cube implements Iterable<Piece>{
   }
   
   /**
+   * Paints a face of one piece of the cube
+   *
+   * @param position position of the piece
+   * @param direction direction of the face to paint
+   * @param color color to paint
+   * @returns true if successful, false if piece of face doesn't exist
+   */
+  public boolean paintPiece(Position position, 
+      Direction direction, Color color){
+    if(piecesMap.containsKey(position)){
+      Piece p = piecesMap.get(position);
+      return p.setFace(direction, color);
+    }
+    return false;
+  }
+  
+  /**
    * Iterate through the cube in the 2D map format
    *
    * @returns Cube Iterator

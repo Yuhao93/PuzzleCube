@@ -68,4 +68,25 @@ public class Edge implements Piece {
     }
     return null;
   }
+  
+  @Override
+  public boolean setFace(Direction direction, Color color){
+    for(Face face : faces){
+      if(face.getDirection() == direction){
+        face.setColor(color);
+        return true;
+      }
+    }
+    return false;
+  }
+  
+  @Override
+  public boolean hasFace(Direction direction){
+    for(Face face : faces){
+      if(face.getDirection() == direction){
+        return true;
+      }
+    }
+    return false;
+  }
 }

@@ -55,7 +55,45 @@ public class CubeParser {
       res += str + " ";
       str = br.readLine();
     }
-    return createCubeFromArgs(res);
+
+    return runArgumentsFromFileContent(res);
+  }
+  
+  /**
+   * Given the size of the cube, the color mapping, and the colors of the cube,
+   * create the cube.
+   *
+   * @param sideLength The length of one edge of the cube
+   * @param mapper The color mapping
+   * @param colors the colors of the cube
+   * @returns the cube generated from the arguments
+   */
+  public static Cube createCubeFromArguments(int sideLength, 
+      ColorMapper mapper, Color[] colors){
+    Cube cube = new Cube(sideLength, false);
+    cube.setMapper(mapper);
+    
+    Iterator<Piece> iterator = cube.iterator();
+    for(int i = 0; i < colors.length; i ++){
+      Color color = colors[i];
+      Direction direction = Util.determineDirectionFromInd(i, sideLength);
+      Piece piece = iterator.next();
+      String type = piece.getPieceType();
+      if(type.equals("Edge")){
+        Edge edge = (Edge) piece;
+        edge.addFace(new Face(direction, color));
+        
+      }else if(type.equals("Corner")){
+        Corner corner = (Corner) piece;
+        corner.addFace(new Face(direction, color));
+        
+      }else if(type.equals("Center")){
+        Center center = (Center) piece;
+        center.addFace(new Face(direction, color));
+      }
+    }
+    
+    return cube;
   }
   
   /**
@@ -108,10 +146,9 @@ public class CubeParser {
     fos.flush();
   }
   
-  static Cube createCubeFromArgs(String args){
-    Scanner scanner = new Scanner(args);
+  private static Cube runArgumentsFromFileContent(String res){
+    Scanner scanner = new Scanner(res);
     int sideLength = scanner.nextInt();
-    
     Map<String, String> colorRelation = new HashMap<String, String>();
     Color[] mapColors = new Color[6];
     
@@ -126,30 +163,7 @@ public class CubeParser {
     for(int i = 0; i < colors.length; i ++){
       colors[i] = new Color(colorRelation.get(scanner.next()));
     }
-  
-    Cube cube = new Cube(sideLength, false);
-    cube.setMapper(new ColorMapper(mapColors));
     
-    Iterator<Piece> iterator = cube.iterator();
-    for(int i = 0; i < colors.length; i ++){
-      Color color = colors[i];
-      Direction direction = Util.determineDirectionFromInd(i, sideLength);
-      Piece piece = iterator.next();
-      String type = piece.getPieceType();
-      if(type.equals("Edge")){
-        Edge edge = (Edge) piece;
-        edge.addFace(new Face(direction, color));
-        
-      }else if(type.equals("Corner")){
-        Corner corner = (Corner) piece;
-        corner.addFace(new Face(direction, color));
-        
-      }else if(type.equals("Center")){
-        Center center = (Center) piece;
-        center.addFace(new Face(direction, color));
-      }
-    }
-    
-    return cube;
+    return createCubeFromArguments(sideLength, new ColorMapper(mapColors), colors);
   }
 }
